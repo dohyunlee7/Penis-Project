@@ -1,0 +1,65 @@
+---
+title: "penis project"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+```
+
+Is length a good indicator for girth?
+
+```{r}
+# read in dataset
+penis_data <- read.csv("/Users/Dohyun/Desktop/projects/penis project/world_penis_dataset/penis.csv")
+```
+
+```{r}
+#check normality of erect length means
+
+#using a histogram
+hist(penis_data$length_erect)
+
+#NPP plot
+qqnorm(penis_data$length_erect)
+qqline(penis_data$length_erect)
+```
+
+```{r}
+#check normality of erect girth means
+
+#using a histogram
+hist(penis_data$circumf_erect)
+
+#NPP plot
+qqnorm(penis_data$circumf_erect)
+qqline(penis_data$circumf_erect)
+```
+
+```{r}
+t.test(penis_data$length_erect)
+t.test(penis_data$circumf_erect)
+```
+
+Confidence interval for mean erect length is 13.56-14.16 cm.
+Confidence interval for mean erect girth is 11.72-11.96 cm.
+
+```{r}
+#check for biases
+self_reported_data <- filter(penis_data, Method == "Self reported")
+measured_data <- filter(penis_data, Method == "Measured")
+
+t.test(self_reported_data$length_erect)
+t.test(self_reported_data$circumf_erect)
+t.test(measured_data$length_erect)
+t.test(measured_data$circumf_erect)
+```
+
+```{r}
+#region <- penis_data[,"Region"]
+length <- penis_data[,"length_erect"]
+girth <- penis_data[,"circumf_erect"]
+fit1 <- lm(length ~ girth)
+plot(fit1)
+```
