@@ -100,4 +100,4 @@ fit1 <- lm(girth ~ length)
 summary(fit1)
 ```
 
-From the p-value of our slope (which is 5.42e-14), we are able to tell that our slope isn't zero, which simply just tells us that there is a relationship between length and girth. However, our R-squared value of 0.34 tells us that there is a fairly weak correlation between the two variables, which could lead us to believe that length is not a good indicator of girth and vice versa.
+From the p-value of our slope (which is 5.42e-14), we are able to reject the null hypothesis and say that our slope isn't zero, which simply just tells us that there is a relationship between length and girth. However, our R-squared value of 0.34 tells us that there is a fairly weak correlation between the two variables, which could lead us to believe that length is not a good indicator of girth and vice versa.
