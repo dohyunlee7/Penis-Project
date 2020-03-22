@@ -68,3 +68,9 @@ bp + coord_flip()
 bp2 <- ggplot(penis_data, aes(x = region, y = girth)) +
   geom_boxplot()
 bp2 + coord_flip()
+
+#What is the relationship between length and girth?
+  
+#create a linear regression model bt length & girth
+fit1 <- lm(girth ~ length)
+summary(fit1)

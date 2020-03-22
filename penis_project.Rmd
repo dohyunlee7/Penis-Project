@@ -51,16 +51,20 @@ Confidence interval for mean erect girth is 11.72-11.96 cm.
 self_reported_data <- filter(penis_data, Method == "Self reported")
 measured_data <- filter(penis_data, Method == "Measured")
 
+
+
 t.test(self_reported_data$length_erect)
-#CI for self-reported length: 14.33-15.08
+#CI for mean self-reported length: 14.33-15.08
 t.test(measured_data$length_erect)
-#CI for measured length: 12.97-13.75
+#CI for mean measured length: 12.97-13.75
 
 t.test(self_reported_data$circumf_erect)
-#CI for self-reported girth: 11.55-11.86
+#CI for mean self-reported girth: 11.55-11.86
 t.test(measured_data$circumf_erect)
-##CI for measure length: 11.90-12.25
+##CI for mean measure length: 11.90-12.25
 ```
+
+Note that we we only care about the erect length and girth it provides a better standard of measurement. Flaccid measurements will always vary depending on body and outside temperature and different conditions like health.
 
 The confidence intervals for the self reported and measured don't overlap, and on average the self-reported data shows a higher range of measurements. It is not certain whether the self-reported measurements are honest, but it is not out of the question whether they are.
 
@@ -83,4 +87,12 @@ bp2 <- ggplot(penis_data, aes(x = region, y = girth)) +
 bp2 + coord_flip()
 ```
 
+What is the relationship between length and girth? Is length a good indicator for girth and vice versa?
 
+```{r}
+#create a linear regression model bt length & girth
+fit1 <- lm(girth ~ length)
+summary(fit1)
+```
+
+From the p-value of our slope (which is 5.42e-14), we are able to tell that our slope isn't zero, which simply just tells us that there is a relationship between length and girth. However, our R-squared value of 0.34 tells us that there is a fairly weak correlation between the two variables, which could lead us to believe that length is not a good indicator of girth and vice versa.
