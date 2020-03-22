@@ -1,22 +1,13 @@
----
-title: "Penis Measurements Across the World"
-output:
-  pdf_document: default
-  word_document: default
-  html_document: default
----
 
-```{r}
+
 library(ggplot2)
 library(tidyverse)
-```
+library(magrittr)
 
-```{r}
 # read in dataset
 penis_data <- read.csv("/Users/Dohyun/Desktop/projects/Penis-Project/world_penis_dataset/penis.csv")
-```
 
-```{r}
+
 #check normality of erect length means
 
 #using a histogram
@@ -25,9 +16,9 @@ hist(penis_data$length_erect)
 #NPP plot
 qqnorm(penis_data$length_erect)
 qqline(penis_data$length_erect)
-```
 
-```{r}
+
+
 #check normality of erect girth means
 
 #using a histogram
@@ -36,17 +27,17 @@ hist(penis_data$circumf_erect)
 #NPP plot
 qqnorm(penis_data$circumf_erect)
 qqline(penis_data$circumf_erect)
-```
 
-```{r}
+
+
 t.test(penis_data$length_erect)
 t.test(penis_data$circumf_erect)
-```
 
-Confidence interval for mean erect length is 13.56-14.16 cm.
-Confidence interval for mean erect girth is 11.72-11.96 cm.
 
-```{r}
+#Confidence interval for mean erect length is 13.56-14.16 cm.
+#Confidence interval for mean erect girth is 11.72-11.96 cm.
+
+
 #check for overlaps between both methods
 self_reported_data <- filter(penis_data, Method == "Self reported")
 measured_data <- filter(penis_data, Method == "Measured")
@@ -60,27 +51,20 @@ t.test(self_reported_data$circumf_erect)
 #CI for self-reported girth: 11.55-11.86
 t.test(measured_data$circumf_erect)
 ##CI for measure length: 11.90-12.25
-```
 
-The confidence intervals for the self reported and measured don't overlap, and on average the self-reported data shows a higher range of measurements. It is not certain whether the self-reported measurements are honest, but it is not out of the question whether they are.
 
-```{r}
 size_length <- length(penis_data$length_erect)
 size_girth <- length(penis_data$circumf_erect)
 region <- penis_data[,"Region"]
 length <- penis_data[,"length_erect"]
 girth <- penis_data[,"circumf_erect"]
 
-#boxplot of the regions
+#boxplot of the regions vs length
 bp <- ggplot(penis_data, aes(x = region, y = length)) +
   geom_boxplot()
 bp + coord_flip()
-
 
 #boxplot of the regions vs girth
 bp2 <- ggplot(penis_data, aes(x = region, y = girth)) +
   geom_boxplot()
 bp2 + coord_flip()
-```
-
-
