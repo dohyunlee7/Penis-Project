@@ -16,6 +16,8 @@ library(dplyr)
 penis_data <- read.csv("/Users/Dohyun/Desktop/projects/Penis-Project/world_penis_dataset/penis.csv")
 ```
 
+## Measurement Bias and Regional Measurements
+
 ```{r}
 #check normality of erect length means
 
@@ -38,7 +40,10 @@ qqnorm(penis_data$circumf_erect)
 qqline(penis_data$circumf_erect)
 ```
 
+Erect length and girth means across every country appears to be more normal in the middle quantile, but higher in the higher quantiles and lower in the lower quantiles.
+
 ```{r}
+#run a couple t-tests to find means $ CI's of length and girth
 t.test(penis_data$length_erect)
 t.test(penis_data$circumf_erect)
 ```
@@ -47,11 +52,9 @@ Confidence interval for mean erect length is 13.56-14.16 cm.
 Confidence interval for mean erect girth is 11.72-11.96 cm.
 
 ```{r}
-#check for overlaps between both methods
+#check for overlaps between both methods for potential bias in "Self reported" group
 self_reported_data <- filter(penis_data, Method == "Self reported")
 measured_data <- filter(penis_data, Method == "Measured")
-
-
 
 t.test(self_reported_data$length_erect)
 #CI for mean self-reported length: 14.33-15.08
@@ -66,7 +69,7 @@ t.test(measured_data$circumf_erect)
 
 Note that we we only care about the erect length and girth it provides a better standard of measurement. Flaccid measurements will always vary depending on body and outside temperature and different conditions like health.
 
-The confidence intervals for the self reported and measured don't overlap, and on average the self-reported data shows a higher range of measurements, which could skew the data by a couple centimeters. It is not certain whether the self-reported measurements are honest, but it is not out of the question whether they are.
+The confidence intervals for the self reported and measured don't overlap, and on average the self-reported data shows a higher range of measurements, which could skew the data by a couple centimeters. It is not completely certain whether the self-reported measurements are dishonest, but it is not out of the question whether they are.
 
 ```{r}
 size_length <- length(penis_data$length_erect)
@@ -87,7 +90,9 @@ bp2 <- ggplot(penis_data, aes(x = region, y = girth)) +
 bp2 + coord_flip()
 ```
 
-What is the relationship between length and girth? Is length a good indicator for girth and vice versa?
+Based on the boxplots above, Central America/Caribean, Australia, and Africa have the highest median length, while South America, North America, and Africa have the highest median girth. In terms of length, Africa has the highest variability among its data points, while Europe, South America, and Central/Caribean has the highest variability for girth.
+
+## What is the relationship between length and girth? Is length a good indicator for girth and vice versa?
 
 ```{r}
 #create a linear regression model bt length & girth
